@@ -2,8 +2,14 @@ import axios from "axios";
 import { SESSION_KEY } from "@shared/constants/auth.constants.js";
 import { Storage } from "@shared/lib/storage.js";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
+if (!apiUrl) {
+  console.error("[axios] VITE_API_URL is not set. API calls will fail.");
+}
+
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -26,11 +32,14 @@ apiClient.interceptors.response.use(
   (error) => {
     const message =
       error.response?.data?.error?.message ||
-      error.response?.data?.error ||
+      (typeof error.response?.data?.error === "string"
+        ? error.response.data.error
+        : null) ||
       error.message ||
       "Request failed";
+
     const code = error.response?.data?.error?.code || "UNKNOWN_ERROR";
-    const status = error.response?.status || 0;
+    const status = error.response?.status ?? 0;
 
     const normalized = new Error(message);
     normalized.code = code;

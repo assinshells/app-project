@@ -1,6 +1,14 @@
 import { io } from "socket.io-client";
 
-const socket = io(import.meta.env.VITE_SOCKET_URL, {
+const socketUrl = import.meta.env.VITE_SOCKET_URL;
+
+if (!socketUrl) {
+  console.error(
+    "[socket] VITE_SOCKET_URL is not set. Socket will not connect.",
+  );
+}
+
+const socket = io(socketUrl ?? "", {
   autoConnect: false,
   reconnectionAttempts: 5,
   reconnectionDelay: 1000,

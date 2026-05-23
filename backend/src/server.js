@@ -5,11 +5,16 @@ import logger from "./config/logger.js";
 import { connectDatabase, pool } from "./config/database.js";
 import { connectRedis, disconnectRedis } from "./config/redis.js";
 import { createSocketServer } from "./config/socket.js";
+import { registerSocketHandlers } from "./sockets/index.js";
 
 const PORT = process.env.PORT || 5000;
 
 const httpServer = http.createServer(app);
 const io = createSocketServer(httpServer);
+registerSocketHandlers(io);
+
+const closeSocketServer = (ioServer) =>
+  new Promise((resolve) => ioServer.close(resolve));
 
 const shutdown = async (signal) => {
   logger.info(`${signal} received. Starting graceful shutdown...`);
@@ -25,7 +30,7 @@ const shutdown = async (signal) => {
     await new Promise((resolve) => httpServer.close(resolve));
     logger.info("HTTP server closed");
 
-    io.close();
+    await closeSocketServer(io);
     logger.info("Socket.IO closed");
 
     await pool.end();
@@ -47,7 +52,7 @@ process.on("SIGINT", () => shutdown("SIGINT"));
 process.on("SIGTERM", () => shutdown("SIGTERM"));
 
 process.on("unhandledRejection", (reason) => {
-  logger.error(`Unhandled rejection: ${reason}`);
+  logger.error(`Unhandled rejection: ${String(reason)}`);
   shutdown("unhandledRejection");
 });
 

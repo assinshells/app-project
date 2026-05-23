@@ -46,32 +46,35 @@ export default function App() {
 
   const handleLogout = () => logout(() => navigate(AUTH_SCREENS.LOGIN));
 
-  if (screen === AUTH_SCREENS.REGISTER)
-    return <RegisterPage onNavigate={navigate} />;
+  switch (screen) {
+    case AUTH_SCREENS.REGISTER:
+      return <RegisterPage onNavigate={navigate} />;
 
-  if (screen === AUTH_SCREENS.FORGOT)
-    return <ForgotPasswordPage onNavigate={navigate} />;
+    case AUTH_SCREENS.FORGOT:
+      return <ForgotPasswordPage onNavigate={navigate} />;
 
-  if (screen === AUTH_SCREENS.OTP)
-    return (
-      <VerifyOtpPage onNavigate={navigate} email={screenParams.email ?? ""} />
-    );
+    case AUTH_SCREENS.OTP:
+      return (
+        <VerifyOtpPage onNavigate={navigate} email={screenParams.email ?? ""} />
+      );
 
-  if (screen === AUTH_SCREENS.RESET)
-    return (
-      <ResetPasswordPage
-        onNavigate={navigate}
-        verifiedToken={screenParams.verifiedToken}
-      />
-    );
+    case AUTH_SCREENS.RESET:
+      return (
+        <ResetPasswordPage
+          onNavigate={navigate}
+          verifiedToken={screenParams.verifiedToken}
+        />
+      );
 
-  if (screen === AUTH_SCREENS.APP)
-    return (
-      <div>
-        <p>Socket.IO: {connected ? "Connected" : "Disconnected"}</p>
-        <button onClick={handleLogout}>Logout</button>
-      </div>
-    );
+    case AUTH_SCREENS.APP:
+      return (
+        <div>
+          <p>Socket.IO: {connected ? "Connected" : "Disconnected"}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      );
 
-  return <LoginPage onNavigate={navigate} />;
+    default:
+      return <LoginPage onNavigate={navigate} />;
+  }
 }

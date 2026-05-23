@@ -33,13 +33,15 @@ export const AuthService = {
     }
 
     const passwordHash = await PasswordProvider.hash(password);
-    await UserRepository.create({ login, passwordHash, email });
+    const created = await UserRepository.create({ login, passwordHash, email });
+
+    if (!created) throw new ConflictException(AUTH_ERRORS.LOGIN_TAKEN);
+
     return { success: true };
   },
 
   async forgotPassword({ email }) {
     const user = await UserRepository.findByEmail(email);
-    // Не раскрываем факт существования email
     if (!user) return { success: true };
 
     const otp = await OtpService.generateOtp(user.id);
