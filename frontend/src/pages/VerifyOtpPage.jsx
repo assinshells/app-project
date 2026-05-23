@@ -10,6 +10,7 @@ export function VerifyOtpPage({ onNavigate }) {
       onSuccess={(verifiedToken) =>
         onNavigate(AUTH_SCREENS.RESET, { verifiedToken })
       }
+      onBack={() => onNavigate(AUTH_SCREENS.FORGOT)}
     />
   );
 }

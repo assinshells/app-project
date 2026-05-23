@@ -6,6 +6,7 @@ export function ResetPasswordPage({ onNavigate, verifiedToken }) {
     <ResetPasswordForm
       verifiedToken={verifiedToken}
       onSuccess={() => onNavigate(AUTH_SCREENS.LOGIN)}
+      onBack={() => onNavigate(AUTH_SCREENS.LOGIN)}
     />
   );
 }

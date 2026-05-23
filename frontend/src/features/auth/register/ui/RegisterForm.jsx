@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRegisterStore } from "../model/useRegisterStore.js";
 
-export function RegisterForm({ onSuccess }) {
+export function RegisterForm({ onSuccess, onBack }) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -48,6 +48,11 @@ export function RegisterForm({ onSuccess }) {
           {loading ? "Registering..." : "Register"}
         </button>
       </form>
+      <p>
+        <button type="button" onClick={onBack}>
+          ← Back to Login
+        </button>
+      </p>
     </div>
   );
 }

@@ -2,5 +2,10 @@ import { RegisterForm } from "../features/auth/register/ui/RegisterForm.jsx";
 import { AUTH_SCREENS } from "../shared/constants/auth.constants.js";
 
 export function RegisterPage({ onNavigate }) {
-  return <RegisterForm onSuccess={() => onNavigate(AUTH_SCREENS.LOGIN)} />;
+  return (
+    <RegisterForm
+      onSuccess={() => onNavigate(AUTH_SCREENS.LOGIN)}
+      onBack={() => onNavigate(AUTH_SCREENS.LOGIN)}
+    />
+  );
 }

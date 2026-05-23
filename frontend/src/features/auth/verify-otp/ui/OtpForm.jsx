@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useVerifyOtpStore } from "../model/useVerifyOtpStore.js";
 
-export function OtpForm({ email, onSuccess }) {
+export function OtpForm({ email, onSuccess, onBack }) {
   const [otpCode, setOtpCode] = useState("");
   const { loading, error, verify, clearError } = useVerifyOtpStore();
 
@@ -31,6 +31,11 @@ export function OtpForm({ email, onSuccess }) {
           {loading ? "Verifying..." : "Verify"}
         </button>
       </form>
+      <p>
+        <button type="button" onClick={onBack}>
+          ← Back
+        </button>
+      </p>
     </div>
   );
 }

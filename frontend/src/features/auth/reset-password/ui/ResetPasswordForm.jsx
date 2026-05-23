@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useResetPasswordStore } from "../model/useResetPasswordStore.js";
 
-export function ResetPasswordForm({ verifiedToken, onSuccess }) {
+export function ResetPasswordForm({ verifiedToken, onSuccess, onBack }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { loading, error, reset, clearError } = useResetPasswordStore();
@@ -39,6 +39,11 @@ export function ResetPasswordForm({ verifiedToken, onSuccess }) {
           {loading ? "Saving..." : "Save Password"}
         </button>
       </form>
+      <p>
+        <button type="button" onClick={onBack}>
+          ← Back to Login
+        </button>
+      </p>
     </div>
   );
 }
