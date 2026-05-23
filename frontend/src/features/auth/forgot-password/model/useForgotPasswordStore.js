@@ -4,15 +4,11 @@ import { forgotPasswordRequest } from "@features/auth/forgot-password/api/forgot
 export const useForgotPasswordStore = create((set) => ({
   loading: false,
   error: null,
-  email: "",
-
-  setEmail: (email) => set({ email }),
 
   submit: async ({ email }, onSuccess) => {
     set({ loading: true, error: null });
     try {
       await forgotPasswordRequest({ email });
-      set({ email });
       onSuccess();
     } catch (err) {
       set({ error: err.message });

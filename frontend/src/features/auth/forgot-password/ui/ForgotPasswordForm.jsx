@@ -8,7 +8,7 @@ export function ForgotPasswordForm({ onSuccess, onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     clearError();
-    submit({ email }, onSuccess);
+    submit({ email }, () => onSuccess(email));
   };
 
   return (

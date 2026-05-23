@@ -1,15 +1,23 @@
-/**
- * Тонкая обёртка над localStorage.
- * Изолирует прямые обращения к storage от остального кода.
- */
 export const Storage = {
   get(key) {
-    return localStorage.getItem(key);
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
   },
   set(key, value) {
-    localStorage.setItem(key, value);
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // localStorage unavailable (private mode, quota exceeded)
+    }
   },
   remove(key) {
-    localStorage.removeItem(key);
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      // localStorage unavailable
+    }
   },
 };

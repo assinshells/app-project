@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { LoginForm } from "@features/auth/login/ui/LoginForm.jsx";
 import { AUTH_SCREENS } from "@shared/constants/auth.constants.js";
 

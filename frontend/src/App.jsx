@@ -27,15 +27,19 @@ export default function App() {
   useEffect(() => {
     if (screen !== AUTH_SCREENS.APP) return;
 
-    socket.connect();
     const onConnect = () => setConnected(true);
     const onDisconnect = () => setConnected(false);
+    const onError = (err) => console.error("[Socket.IO] Error:", err.message);
+
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
+    socket.on("connect_error", onError);
+    socket.connect();
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
+      socket.off("connect_error", onError);
       socket.disconnect();
     };
   }, [screen]);
@@ -49,7 +53,9 @@ export default function App() {
     return <ForgotPasswordPage onNavigate={navigate} />;
 
   if (screen === AUTH_SCREENS.OTP)
-    return <VerifyOtpPage onNavigate={navigate} />;
+    return (
+      <VerifyOtpPage onNavigate={navigate} email={screenParams.email ?? ""} />
+    );
 
   if (screen === AUTH_SCREENS.RESET)
     return (

@@ -1,11 +1,7 @@
 import axios from "axios";
 import { SESSION_KEY } from "@shared/constants/auth.constants.js";
+import { Storage } from "@shared/lib/storage.js";
 
-/**
- * apiClient — единый axios-клиент.
- * - request interceptor: автоматически подставляет sessionId
- * - response interceptor: нормализует ошибки
- */
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
@@ -14,10 +10,9 @@ export const apiClient = axios.create({
   timeout: 10000,
 });
 
-// Request interceptor — подставляем токен сессии
 apiClient.interceptors.request.use(
   (config) => {
-    const sessionId = localStorage.getItem(SESSION_KEY);
+    const sessionId = Storage.get(SESSION_KEY);
     if (sessionId) {
       config.headers["x-session-id"] = sessionId;
     }
@@ -26,7 +21,6 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// Response interceptor — нормализуем ошибки
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
