@@ -1,24 +1,34 @@
 import { useState, useEffect } from "react";
 import socket from "./socket/socket.js";
-import LoginForm from "./auth/LoginForm.jsx";
-import RegisterForm from "./auth/RegisterForm.jsx";
-import ForgotPasswordForm from "./auth/ForgotPasswordForm.jsx";
-import OtpForm from "./auth/OtpForm.jsx";
-import ResetPasswordForm from "./auth/ResetPasswordForm.jsx";
-import { apiLogout } from "./api/auth.js";
+import {
+  AUTH_SCREENS,
+  SESSION_KEY,
+} from "./shared/constants/auth.constants.js";
+import { Storage } from "./shared/lib/storage.js";
+import { useLogoutStore } from "./features/auth/logout/model/useLogoutStore.js";
 
-// Screens: login | register | forgot | otp | reset | app
+import { LoginPage } from "./pages/LoginPage.jsx";
+import { RegisterPage } from "./pages/RegisterPage.jsx";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage.jsx";
+import { VerifyOtpPage } from "./pages/VerifyOtpPage.jsx";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage.jsx";
+
 const getInitialScreen = () =>
-  localStorage.getItem("sessionId") ? "app" : "login";
+  Storage.get(SESSION_KEY) ? AUTH_SCREENS.APP : AUTH_SCREENS.LOGIN;
 
 export default function App() {
   const [screen, setScreen] = useState(getInitialScreen);
+  const [screenParams, setScreenParams] = useState({});
   const [connected, setConnected] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
-  const [verifiedToken, setVerifiedToken] = useState("");
+  const { logout } = useLogoutStore();
+
+  const navigate = (newScreen, params = {}) => {
+    setScreen(newScreen);
+    setScreenParams(params);
+  };
 
   useEffect(() => {
-    if (screen !== "app") return;
+    if (screen !== AUTH_SCREENS.APP) return;
 
     socket.connect();
     const onConnect = () => setConnected(true);
@@ -33,65 +43,32 @@ export default function App() {
     };
   }, [screen]);
 
-  const handleLogout = async () => {
-    try {
-      await apiLogout();
-    } catch (_) {
-      // ignore
-    }
-    localStorage.removeItem("sessionId");
-    setScreen("login");
-  };
+  const handleLogout = () => logout(() => navigate(AUTH_SCREENS.LOGIN));
 
-  if (screen === "register") {
-    return <RegisterForm onSuccess={() => setScreen("login")} />;
-  }
+  if (screen === AUTH_SCREENS.REGISTER)
+    return <RegisterPage onNavigate={navigate} />;
 
-  if (screen === "forgot") {
+  if (screen === AUTH_SCREENS.FORGOT)
+    return <ForgotPasswordPage onNavigate={navigate} />;
+
+  if (screen === AUTH_SCREENS.OTP)
+    return <VerifyOtpPage onNavigate={navigate} />;
+
+  if (screen === AUTH_SCREENS.RESET)
     return (
-      <ForgotPasswordForm
-        onEmail={(email) => setResetEmail(email)}
-        onSuccess={() => setScreen("otp")}
+      <ResetPasswordPage
+        onNavigate={navigate}
+        verifiedToken={screenParams.verifiedToken}
       />
     );
-  }
 
-  if (screen === "otp") {
-    return (
-      <OtpForm
-        email={resetEmail}
-        onSuccess={(token) => {
-          setVerifiedToken(token);
-          setScreen("reset");
-        }}
-      />
-    );
-  }
-
-  if (screen === "reset") {
-    return (
-      <ResetPasswordForm
-        verifiedToken={verifiedToken}
-        onSuccess={() => setScreen("login")}
-      />
-    );
-  }
-
-  if (screen === "app") {
+  if (screen === AUTH_SCREENS.APP)
     return (
       <div>
         <p>Socket.IO: {connected ? "Connected" : "Disconnected"}</p>
         <button onClick={handleLogout}>Logout</button>
       </div>
     );
-  }
 
-  // login (default)
-  return (
-    <LoginForm
-      onSuccess={() => setScreen("app")}
-      onRegister={() => setScreen("register")}
-      onForgot={() => setScreen("forgot")}
-    />
-  );
+  return <LoginPage onNavigate={navigate} />;
 }

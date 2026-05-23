@@ -4,7 +4,8 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import logger from "./config/logger.js";
-import authRouter from "./routes/auth.js";
+import authRoutes from "./routes/auth.routes.js";
+import { globalExceptionHandler } from "./handlers/globalException.handler.js";
 
 const app = express();
 
@@ -14,17 +15,9 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/auth", authRouter);
+app.use("/auth", authRoutes);
 
-// Error handler
-app.use((err, _req, res, _next) => {
-  logger.error(`Unhandled error: ${err.message}`);
-  res.status(err.status || 500).json({
-    error:
-      process.env.NODE_ENV === "production"
-        ? "Internal Server Error"
-        : err.message,
-  });
-});
+// Глобальный обработчик ошибок — должен быть последним
+app.use(globalExceptionHandler);
 
 export default app;
