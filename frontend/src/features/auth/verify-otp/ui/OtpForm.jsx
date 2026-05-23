@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useVerifyOtpStore } from "../model/useVerifyOtpStore.js";
+import { useVerifyOtpStore } from "@features/auth/verify-otp/model/useVerifyOtpStore.js";
 
 export function OtpForm({ email, onSuccess, onBack }) {
   const [otpCode, setOtpCode] = useState("");

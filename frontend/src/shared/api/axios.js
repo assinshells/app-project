@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SESSION_KEY } from "../constants/auth.constants.js";
+import { SESSION_KEY } from "@shared/constants/auth.constants.js";
 
 /**
  * apiClient — единый axios-клиент.

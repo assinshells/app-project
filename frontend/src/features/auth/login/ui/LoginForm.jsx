@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoginStore } from "../model/useLoginStore.js";
+import { useLoginStore } from "@features/auth/login/model/useLoginStore.js";
 
 /**
  * LoginForm — тупой компонент.

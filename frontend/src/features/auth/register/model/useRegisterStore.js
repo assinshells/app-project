@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { registerRequest } from "../api/register.api.js";
+import { registerRequest } from "@features/auth/register/api/register.api.js";
 
 export const useRegisterStore = create((set) => ({
   loading: false,

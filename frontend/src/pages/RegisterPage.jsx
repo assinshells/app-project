@@ -1,5 +1,5 @@
-import { RegisterForm } from "../features/auth/register/ui/RegisterForm.jsx";
-import { AUTH_SCREENS } from "../shared/constants/auth.constants.js";
+import { RegisterForm } from "@features/auth/register/ui/RegisterForm.jsx";
+import { AUTH_SCREENS } from "@shared/constants/auth.constants.js";
 
 export function RegisterPage({ onNavigate }) {
   return (

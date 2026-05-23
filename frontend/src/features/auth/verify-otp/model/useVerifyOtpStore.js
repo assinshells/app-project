@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { verifyOtpRequest } from "../api/verifyOtp.api.js";
+import { verifyOtpRequest } from "@features/auth/verify-otp/api/verifyOtp.api.js";
 
 export const useVerifyOtpStore = create((set) => ({
   loading: false,

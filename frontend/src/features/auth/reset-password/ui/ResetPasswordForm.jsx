@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useResetPasswordStore } from "../model/useResetPasswordStore.js";
+import { useResetPasswordStore } from "@features/auth/reset-password/model/useResetPasswordStore.js";
 
 export function ResetPasswordForm({ verifiedToken, onSuccess, onBack }) {
   const [password, setPassword] = useState("");

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRegisterStore } from "../model/useRegisterStore.js";
+import { useRegisterStore } from "@features/auth/register/model/useRegisterStore.js";
 
 export function RegisterForm({ onSuccess, onBack }) {
   const [login, setLogin] = useState("");

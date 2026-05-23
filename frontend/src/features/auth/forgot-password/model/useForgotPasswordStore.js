@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { forgotPasswordRequest } from "../api/forgotPassword.api.js";
+import { forgotPasswordRequest } from "@features/auth/forgot-password/api/forgotPassword.api.js";
 
 export const useForgotPasswordStore = create((set) => ({
   loading: false,

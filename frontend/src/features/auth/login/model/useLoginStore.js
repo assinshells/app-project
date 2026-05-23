@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { loginRequest } from "../api/login.api.js";
-import { Storage } from "../../../../shared/lib/storage.js";
-import { SESSION_KEY } from "../../../../shared/constants/auth.constants.js";
+import { loginRequest } from "@features/auth/login/api/login.api.js";
+import { Storage } from "@shared/lib/storage.js";
+import { SESSION_KEY } from "@shared/constants/auth.constants.js";
 
 export const useLoginStore = create((set) => ({
   loading: false,

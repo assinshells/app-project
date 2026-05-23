@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForgotPasswordStore } from "../model/useForgotPasswordStore.js";
+import { useForgotPasswordStore } from "@features/auth/forgot-password/model/useForgotPasswordStore.js";
 
 export function ForgotPasswordForm({ onSuccess, onBack }) {
   const [email, setEmail] = useState("");

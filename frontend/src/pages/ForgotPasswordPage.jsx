@@ -1,5 +1,5 @@
-import { ForgotPasswordForm } from "../features/auth/forgot-password/ui/ForgotPasswordForm.jsx";
-import { AUTH_SCREENS } from "../shared/constants/auth.constants.js";
+import { ForgotPasswordForm } from "@features/auth/forgot-password/ui/ForgotPasswordForm.jsx";
+import { AUTH_SCREENS } from "@shared/constants/auth.constants.js";
 
 export function ForgotPasswordPage({ onNavigate }) {
   return (

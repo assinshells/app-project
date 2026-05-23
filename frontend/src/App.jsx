@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-import socket from "./socket/socket.js";
-import {
-  AUTH_SCREENS,
-  SESSION_KEY,
-} from "./shared/constants/auth.constants.js";
-import { Storage } from "./shared/lib/storage.js";
-import { useLogoutStore } from "./features/auth/logout/model/useLogoutStore.js";
+import socket from "@socket/socket.js";
+import { AUTH_SCREENS, SESSION_KEY } from "@shared/constants/auth.constants.js";
+import { Storage } from "@shared/lib/storage.js";
+import { useLogoutStore } from "@features/auth/logout/model/useLogoutStore.js";
 
-import { LoginPage } from "./pages/LoginPage.jsx";
-import { RegisterPage } from "./pages/RegisterPage.jsx";
-import { ForgotPasswordPage } from "./pages/ForgotPasswordPage.jsx";
-import { VerifyOtpPage } from "./pages/VerifyOtpPage.jsx";
-import { ResetPasswordPage } from "./pages/ResetPasswordPage.jsx";
+import { LoginPage } from "@pages/LoginPage.jsx";
+import { RegisterPage } from "@pages/RegisterPage.jsx";
+import { ForgotPasswordPage } from "@pages/ForgotPasswordPage.jsx";
+import { VerifyOtpPage } from "@pages/VerifyOtpPage.jsx";
+import { ResetPasswordPage } from "@pages/ResetPasswordPage.jsx";
 
 const getInitialScreen = () =>
   Storage.get(SESSION_KEY) ? AUTH_SCREENS.APP : AUTH_SCREENS.LOGIN;

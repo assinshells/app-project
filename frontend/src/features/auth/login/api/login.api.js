@@ -1,4 +1,4 @@
-import { apiClient } from "../../../../shared/api/axios.js";
+import { apiClient } from "@shared/api/axios.js";
 
 /**
  * @param {{ login: string, password: string }} dto

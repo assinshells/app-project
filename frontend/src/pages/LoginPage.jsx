@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { LoginForm } from "../features/auth/login/ui/LoginForm.jsx";
-import { AUTH_SCREENS } from "../shared/constants/auth.constants.js";
+import { LoginForm } from "@features/auth/login/ui/LoginForm.jsx";
+import { AUTH_SCREENS } from "@shared/constants/auth.constants.js";
 
 export function LoginPage({ onNavigate }) {
   return (

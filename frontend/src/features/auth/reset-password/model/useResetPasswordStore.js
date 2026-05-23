@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { resetPasswordRequest } from "../api/resetPassword.api.js";
+import { resetPasswordRequest } from "@features/auth/reset-password/api/resetPassword.api.js";
 
 export const useResetPasswordStore = create((set) => ({
   loading: false,
